@@ -9,12 +9,12 @@ while end > start:
     if abs(target) > abs(tmp):
         target = abs(tmp)
         a,b = arr[start],arr[end]
-        if end-1 > start and abs(arr[start]+arr[end-1]) > abs(tmp):
+        if abs(arr[start]+arr[end-1]) > abs(tmp):
             start += 1
         else:
             end -= 1
     else:
-        if end-1 > start and abs(arr[start]+arr[end-1]) > abs(tmp):
+        if abs(arr[start]+arr[end-1]) > abs(tmp):
             start += 1
         else:
             end -= 1
