@@ -1,34 +1,40 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
 N,M,V = map(int,input().split())
-arr = [[0]*N for _ in range(N)]
 
-for i in range(M):
-    y,x = map(int,input().split())
-    arr[y-1][x-1] = 1
-    arr[x-1][y-1] = 1
-
+arr = [[0] * N for _ in range(N)]
 used = [0] * N
+for i in range(M):
+    s,e = map(int,input().split())
+    arr[s-1][e-1] = 1
+    arr[e-1][s-1] = 1
 
 def dfs(level):
-    print(level,end = ' ')
-    for i in range(N):
-        if used[i] == 0 :
-            if arr[level-1][i] == 1:
-                used[i] = 1
-                dfs(i+1)
 
-used[V-1] = 1
-dfs(V)
-print()
-def bfs(now):
-    node = [now]
+    if used[level] == 0:
+        print(level+1, end = ' ')
+        used[level] = 1
+        for j in range(N):
+            if arr[level][j] == 1:
+                dfs(j)
+
+def bfs(level):
+    node = deque([level])
+
     while node:
-        y = node.pop(0)
-        print(y+1,end = ' ')
-        for i in range(N):
-            if arr[y][i] == 1 and used[i] == 0:
-                used[i] = 1
-                node.append(i)
+        y = node.popleft()
+        print(y+1, end= ' ')
+        for k in range(N):
+            if used[k] == 0 and arr[y][k] == 1:
+                used[k] = 1
+                node.append(k)
 
+
+
+dfs(V-1)
+print()
 used = [0] * N
 used[V-1] = 1
 bfs(V-1)
