@@ -1,19 +1,21 @@
+import sys
+sys.setrecursionlimit(10**9)
+
 N,M = map(int,input().split())
-path = [''] * M
 used = [0] * N
+result = [0] * M
+
 def dfs(level):
 
     if level == M:
-        for i in range(M):
-            print(path[i], end = ' ')
-        print()
+        print(*result, sep=' ')
         return
 
-    for j in range(N):
-        if used[j] == 0:
-            used[j] = 1
-            path[level] = j+1
+    for i in range(N):
+        if used[i] == 0:
+            used[i] = 1
+            result[level] = i+1
             dfs(level+1)
-            used[j] = 0
+            used[i] = 0
 
 dfs(0)
